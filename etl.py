@@ -12,11 +12,18 @@ def extract_data(folder: str) -> pd.DataFrame:
 
 def transform_data(df: pd.DataFrame):
     df['Receita'] = df['Quantidade'] * df['Venda']
-    print(df)
     return df
+
+def load_data(df: pd.DataFrame, formarts: list):
+    for format in formarts:
+        if format == 'csv':
+            df.to_csv('data.csv',index=False)
+        elif format == 'parquet':
+            df.to_parquet('data.parquet',index=False)
 
 
 if __name__ == "__main__":
     data = extract_data('data')
-    transform_data(data)
+    data_transformed = transform_data(data)
+    load_data(data_transformed, ['csv'])
 
