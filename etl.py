@@ -21,9 +21,11 @@ def load_data(df: pd.DataFrame, formarts: list):
         elif format == 'parquet':
             df.to_parquet('data.parquet',index=False)
 
+def pipeline_run(folder: str, output_format: str):
+    data = extract_data(folder)
+    data_transformed = transform_data(data)
+    load_data(data_transformed, [output_format])
 
 if __name__ == "__main__":
-    data = extract_data('data')
-    data_transformed = transform_data(data)
-    load_data(data_transformed, ['csv'])
+    pipeline_run('data','parquet')
 
